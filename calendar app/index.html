@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="welcome-screen" class="welcome-container">
+        <h1>Welcome to To-Do Calendar</h1>
+        <button id="start-button">Start</button>
+    </div>
+    
+    <div id="main-app" class="container hidden">
+        <header>
+            <h1 class="title">Calendar App</h1>
+        </header>
+        <div class="calendar-controls">
+            <button id="prev-month">&#10094; Prev</button>
+            <span id="month-label"></span>
+            <button id="next-month">Next &#10095;</button>
+        </div>
+        
+        // Tasks Priority to be entered here
+
+        <div id="calendar"></div>
+        <div id="task-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <label for="task-input">Task:</label>
+                <input type="text" id="task-input">
+                <button id="save-task">Save</button>
+                <button id="clear-all">Clear All</button>
+                <ul id="task-list"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
+

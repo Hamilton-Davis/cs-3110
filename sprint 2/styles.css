@@ -1,0 +1,123 @@
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+.welcome-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.welcome-container button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.welcome-container button:hover {
+    background: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.day {
+    padding: 15px;
+    background: #e3e3e3;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s;
+}
+
+.day:hover {
+    background: #d1d1d1;
+}
+
+/* This should never apply, but here just in case. */
+.has-task {
+    background: #000000;
+    font-weight: bold;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.modal-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.task-item {
+    padding: 5px;
+    background: #f0f0f0;
+    margin: 5px 0;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Task Priority Colors */
+.low-priority {
+    background-color: rgb(68, 170, 68);
+}
+
+.medium-priority {
+    background-color: rgb(228, 228, 116);
+}
+
+.high-priority {
+    background-color: rgb(152, 53, 53);
+}
+

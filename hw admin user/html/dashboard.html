@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .task-list, .user-list {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Dashboard</h2>
+        <p id="welcome-message"></p>
+        
+        <div class="task-list">
+            <h3>Task List</h3>
+            <ul id="task-container"></ul>
+        </div>
+
+        <div class="user-list hidden" id="admin-panel">
+            <h3>User Management</h3>
+            <input type="text" id="new-username" placeholder="Username">
+            <select id="user-role">
+                <option value="author">Author</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button onclick="createUser()">Create User</button>
+            <ul id="user-container"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userRole = localStorage.getItem("userRole");
+            const username = localStorage.getItem("username");
+            
+            document.getElementById("welcome-message").textContent = `Welcome, ${username} (${userRole})`;
+            
+            if (userRole === "admin") {
+                document.getElementById("admin-panel").classList.remove("hidden");
+            }
+        });
+
+        function createUser() {
+            const username = document.getElementById("new-username").value;
+            const role = document.getElementById("user-role").value;
+            if (username) {
+                const userItem = document.createElement("li");
+                userItem.textContent = `${username} - ${role}`;
+                document.getElementById("user-container").appendChild(userItem);
+            }
+        }
+    </script>
+</body>
+</html>

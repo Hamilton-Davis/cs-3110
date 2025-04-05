@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #users-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="login-message"></p>
+    </div>
+
+    <div id="admin-container" style="display:none;">
+        <h2>Admin Panel - Add User</h2>
+        <input type="text" id="new-username" placeholder="New Username">
+        <input type="password" id="new-password" placeholder="New Password">
+        <select id="new-role">
+            <option value="author">Author</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button onclick="addUser()">Add User</button>
+    </div>
+
+    <div id="users-container" style="display:none;">
+        <h2>Users List</h2>
+        <ul id="users-list">
+            <li class="user-item">admin - admin</li>
+            <li class="user-item">author - author <button class="delete-btn" onclick="deleteUser('author')">Remove</button></li>
+            <li class="user-item">user1 - author <button class="delete-btn" onclick="deleteUser('user1')">Remove</button></li>
+        </ul>
+    </div>
+
+    <div id="tasks-section">
+        <h2>Task List</h2>
+        <ul id="tasks-list"></ul>
+        <input type="text" id="new-task" placeholder="New Task Description">
+        <button onclick="addTask()">Add Task</button>
+      </div>
+      
+
+    <script src="script.js"></script>
+</body>
+</html>

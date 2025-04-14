@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+    }
+    .login-container {
+        background: white;
+        padding: 25px;
+        border-radius: 32px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    input {
+        display: block;
+        width: 87%;
+        margin: 10px 0;
+        padding: 10px;
+    }
+    button {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #218838;
+    }
+    #success-message {
+        color: green;
+        display: none;
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="error-message" style="color: red;"></p>
+    <p id="success-message" style="color: green; display: none;">Login successful! Redirecting...</p>
+    <hr>
+    <p>Don't have an account? <a href="#" id="show-register">Create Account</a></p>
+    <div id="register-form" style="display: none;">
+      <input type="text" id="reg-username" placeholder="Username">
+      <input type="password" id="reg-password" placeholder="Password">
+      <button id="register-btn">Register</button>
+      <p id="reg-error-message" style="color: red;"></p>
+      <p id="reg-success-message" style="color: green;"></p>
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+      const successMessage = document.getElementById("success-message");
+      
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          errorMessage.textContent = result.error;
+          successMessage.style.display = "none";
+        } else {
+          successMessage.style.display = "block";
+          errorMessage.textContent = "";
+          // Store login info in localStorage for later use in calendar tasks
+          localStorage.setItem("username", username);
+          localStorage.setItem("userRole", result.role);
+          setTimeout(() => {
+            window.location.href = "calendar.html";
+          }, 1500);
+        }
+      } catch (error) {
+        errorMessage.textContent = "An error occurred";
+      }
+    }
+
+    document.getElementById("show-register").addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById("register-form").style.display = "block";
+    });
+
+    document.getElementById("register-btn").addEventListener("click", async () => {
+      const regUsername = document.getElementById("reg-username").value;
+      const regPassword = document.getElementById("reg-password").value;
+      const regError = document.getElementById("reg-error-message");
+      const regSuccess = document.getElementById("reg-success-message");
+
+      if (!regUsername || !regPassword) {
+        regError.textContent = "Username and password are required";
+        return;
+      }
+      
+      try {
+        const response = await fetch("/api/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: regUsername, password: regPassword })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+          regError.textContent = result.error;
+          regSuccess.textContent = "";
+        } else {
+          regSuccess.textContent = "User created successfully. Please log in.";
+          regError.textContent = "";
+          document.getElementById("reg-username").value = "";
+          document.getElementById("reg-password").value = "";
+        }
+      } catch (error) {
+        regError.textContent = "An error occurred during registration";
+      }
+    });
+  </script>
+</body>
+</html>

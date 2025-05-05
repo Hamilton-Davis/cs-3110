@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Calendar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="welcome-screen" class="welcome-container">
+    <h1>Welcome to To-Do Calendar</h1>
+    <button id="start-button">Start</button>
+  </div>
+
+  <div id="main-app" class="container hidden">
+    <header id="app-header">
+      <h1 class="title">Calendar App</h1>
+    </header>
+
+    <!-- Calendar Controls -->
+    <div class="calendar-controls">
+      <button id="prev-month">&#10094; Prev</button>
+      <span id="month-label"></span>
+      <button id="next-month">Next &#10095;</button>
+      <!-- Toggle between views -->
+      <button id="toggle-view">Switch to List View</button>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div id="calendar"></div>
+
+    <!-- Task Modal -->
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-content">
+        <button class="close">Close</button>
+        <input type="text" id="task-input" placeholder="Enter task" required>
+        <select id="task-priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button id="save-task">Save Task</button>
+        <button id="clear-all">Clear All</button>
+        <ul id="task-list"></ul>
+      </div>
+    </div>
+
+    <!-- Insert Bar -->
+    <div id="insert-bar">
+      <input type="text" id="insert-task-desc" placeholder="Task Description">
+      <input type="date" id="insert-due-date">
+      <select id="insert-task-priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button id="insert-task-btn">Add Task</button>
+    </div>
+
+    <!-- Share Section -->
+    <div id="share-section">
+      <input type="text" id="share-username" placeholder="Enter username to share with">
+      <button id="share-btn">Share Calendar</button>
+    </div>
+
+    <!-- List View (hidden by default) -->
+    <div id="list-view" class="hidden">
+      <!-- Back button to calendar -->
+      <button id="back-to-calendar">Back to Calendar View</button>
+      <h2>Urgent Tasks (Next 7 Days)</h2>
+      <ul id="urgent-list"></ul>
+      <h2>All Tasks</h2>
+      <ul id="all-tasks-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+

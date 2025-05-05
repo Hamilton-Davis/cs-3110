@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <div class="toggle-buttons">
+      <button id="login-tab" class="active-tab">Login</button>
+      <button id="register-tab">Register</button>
+    </div>
+
+    <div id="login-form" class="form-section">
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p id="error-message" class="error"></p>
+      <p id="success-message" class="success">Login successful! Redirecting...</p>
+    </div>
+
+    <div id="register-form" class="form-section hidden">
+      <input type="text" id="reg-username" placeholder="Username" />
+      <input type="password" id="reg-password" placeholder="Password" />
+      <button onclick="register()">Register</button>
+      <p id="reg-error-message" class="error"></p>
+      <p id="reg-success-message" class="success"></p>
+    </div>
+  </div>
+
+  <script>
+    const loginTab = document.getElementById("login-tab");
+    const registerTab = document.getElementById("register-tab");
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+
+    loginTab.onclick = () => {
+      loginForm.classList.remove("hidden");
+      registerForm.classList.add("hidden");
+      loginTab.classList.add("active-tab");
+      registerTab.classList.remove("active-tab");
+    };
+
+    registerTab.onclick = () => {
+      loginForm.classList.add("hidden");
+      registerForm.classList.remove("hidden");
+      registerTab.classList.add("active-tab");
+      loginTab.classList.remove("active-tab");
+    };
+
+    async function login() {
+      // (same logic you already have for login)
+    }
+
+    async function register() {
+      const username = document.getElementById("reg-username").value;
+      const password = document.getElementById("reg-password").value;
+      const regErr = document.getElementById("reg-error-message");
+      const regSuccess = document.getElementById("reg-success-message");
+
+      if (!username || !password) {
+        regErr.textContent = "All fields are required";
+        return;
+      }
+
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        regErr.textContent = result.error;
+        regSuccess.textContent = "";
+      } else {
+        regSuccess.textContent = "Registration successful. Please log in.";
+        regErr.textContent = "";
+      }
+    }
+
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+      const successMessage = document.getElementById("success-message");
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          errorMessage.textContent = result.error || "Login failed";
+          successMessage.style.display = "none";
+        } else {
+          errorMessage.textContent = "";
+          successMessage.style.display = "block";
+          localStorage.setItem("username", username);
+          localStorage.setItem("userRole", result.role);
+          setTimeout(() => {
+            window.location.href = "calendar.html";
+          }, 1500);
+        }
+      } catch (err) {
+        errorMessage.textContent = "Server error during login";
+        successMessage.style.display = "none";
+      }
+    }
+
+  </script>
+</body>
+</html>
